@@ -15,14 +15,14 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#FF85A2", // Rosa pastel para fresas
-                        "secondary": "#BB86EF", // Púrpura pastel para uvas
-                        "accent": "#FFCF96", // Dorado pastel
-                        "strawberry": "#FF5C8D", // Color fresa
-                        "grape": "#8A4FFF", // Color uva
-                        "background-light": "#FFF5F8", // Fondo rosa muy claro
-                        "background-dark": "#251A22", // Fondo oscuro
-                        "text-light": "#3D2B3A", // Texto más oscuro para mejor contraste
+                        "primary": "#FF85A2",
+                        "secondary": "#BB86EF",
+                        "accent": "#FFCF96",
+                        "strawberry": "#FF5C8D",
+                        "grape": "#1A3816",
+                        "background-light": "#FFF5F8",
+                        "background-dark": "#251A22",
+                        "text-light": "#3D2B3A",
                         "text-dark": "#F8F6F7",
                         "text-subtle-light": "#7D6A75",
                         "text-subtle-dark": "#C9B8C2",
@@ -46,6 +46,8 @@
                         'bounce-subtle': 'bounceSubtle 2s infinite',
                         'pulse-soft': 'pulseSoft 2s infinite',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'typewriter': 'typewriter 2s steps(11) forwards',
+                        'blink': 'blink 1s steps(2) infinite 2s'
                     },
                     keyframes: {
                         fadeIn: {
@@ -68,6 +70,14 @@
                         wiggle: {
                             '0%, 100%': { transform: 'rotate(-3deg)' },
                             '50%': { transform: 'rotate(3deg)' },
+                        },
+                        typewriter: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' }
+                        },
+                        blink: {
+                            '0%': { 'border-right-color': 'transparent' },
+                            '50%': { 'border-right-color': 'currentColor' }
                         }
                     }
                 },
@@ -153,14 +163,40 @@
         .special-gradient {
             background: linear-gradient(135deg, #FFCF96 0%, #FF85A2 50%, #BB86EF 100%);
         }
+        
+        /* Animación de escritura */
+        .typewriter-text {
+            overflow: hidden;
+            border-right: 2px solid;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        
+        /* Logo responsivo */
+        .logo-container {
+            height: 25vh;
+            max-height: 200px;
+        }
+        
+        /* Cards del mismo tamaño */
+        .equal-height-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .equal-height-card .card-content {
+            flex-grow: 1;
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark">
     <div class="relative flex h-auto min-h-screen w-full flex-col justify-between font-display text-text-light dark:text-text-dark">
         <main class="flex-grow">
+            <!-- Logo en lugar del título -->
             <header class="sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark shadow-sm">
-                <div class="flex items-center p-4 justify-between max-w-6xl mx-auto">
-                    <h1 class="text-2xl font-bold flex-1 text-center text-primary animate-fade-in">Sweetlicious</h1>
+                <div class="flex items-center justify-center p-4 max-w-6xl mx-auto logo-container">
+                    <img src="logo.jpg" alt="Sweetlicious Logo" class="h-full object-contain">
                 </div>
             </header>
 
@@ -169,20 +205,16 @@
                 <h2 class="text-2xl md:text-3xl font-bold pb-4 text-primary text-center">Nuestras Categorías</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="#fresas" class="bg-gradient-to-br from-[#FFE2EA] to-[#FF85A2] dark:from-strawberry/20 dark:to-strawberry/40 rounded-xl p-4 text-center card-hover cursor-pointer shadow-md">
-                        <span class="material-symbols-outlined text-4xl text-strawberry dark:text-strawberry/90 mb-2">local_cafe</span>
-                        <p class="font-medium text-text-light dark:text-text-dark">Fresas</p>
+                        <p id="fresas-text" class="font-medium text-text-light dark:text-text-dark text-xl min-h-[2rem] typewriter-text"></p>
                     </a>
                     <a href="#uvas" class="bg-gradient-to-br from-[#EDE2FF] to-[#BB86EF] dark:from-grape/20 dark:to-grape/40 rounded-xl p-4 text-center card-hover cursor-pointer shadow-md">
-                        <span class="material-symbols-outlined text-4xl text-grape dark:text-grape/90 mb-2">cake</span>
-                        <p class="font-medium text-text-light dark:text-text-dark">Uvas</p>
+                        <p id="uvas-text" class="font-medium text-text-light dark:text-text-dark text-xl min-h-[2rem] typewriter-text"></p>
                     </a>
                     <a href="#gelatinas" class="bg-gradient-to-br from-[#FFF2D7] to-[#FFCF96] dark:from-accent/20 dark:to-accent/40 rounded-xl p-4 text-center card-hover cursor-pointer shadow-md">
-                        <span class="material-symbols-outlined text-4xl text-amber-400 dark:text-amber-400/90 mb-2">emoji_food_beverage</span>
-                        <p class="font-medium text-text-light dark:text-text-dark">Gelatinas</p>
+                        <p id="gelatinas-text" class="font-medium text-text-light dark:text-text-dark text-xl min-h-[2rem] typewriter-text"></p>
                     </a>
                     <a href="#flan" class="bg-gradient-to-br from-[#FFD9E3] to-[#FF5C8D] dark:from-pink-300/20 dark:to-pink-500/40 rounded-xl p-4 text-center card-hover cursor-pointer shadow-md">
-                        <span class="material-symbols-outlined text-4xl text-pink-500 dark:text-pink-500/90 mb-2">bakery_dining</span>
-                        <p class="font-medium text-text-light dark:text-text-dark">Flan Casero</p>
+                        <p id="flan-text" class="font-medium text-text-light dark:text-text-dark text-xl min-h-[2rem] typewriter-text"></p>
                     </a>
                 </div>
             </section>
@@ -193,9 +225,9 @@
                 <div class="flex overflow-x-auto scroll-container snap-x snap-mandatory px-4 gap-4 pb-4">
                     <!-- Fresas con Crema -->
                     <div class="snap-start shrink-0 w-64 md:w-72">
-                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                             <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHN0cmF3YmVycmllcyUyMGNyZWFtfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                            <div>
+                            <div class="card-content">
                                 <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Fresas con Crema</h3>
                                 <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Fresas frescas con crema batida casera</p>
                                 <p class="text-strawberry font-bold text-lg">$8.99</p>
@@ -209,9 +241,9 @@
                     
                     <!-- Uvas con Crema -->
                     <div class="snap-start shrink-0 w-64 md:w-72">
-                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                             <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGdyYXBlcyUyMGNyZWFtfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                            <div>
+                            <div class="card-content">
                                 <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Uvas con Crema</h3>
                                 <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Uvas dulces con crema batida y miel</p>
                                 <p class="text-grape font-bold text-lg">$9.99</p>
@@ -225,9 +257,9 @@
                     
                     <!-- Gelatina de Fresa -->
                     <div class="snap-start shrink-0 w-64 md:w-72">
-                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                             <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1579503849555-2d4d5b1573f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3RyYXdiZXJyeSUyMGplbGxvfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                            <div>
+                            <div class="card-content">
                                 <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Gelatina de Fresa</h3>
                                 <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Gelatina refrescante con trozos de fresa natural</p>
                                 <p class="text-strawberry font-bold text-lg">$6.99</p>
@@ -241,9 +273,9 @@
                     
                     <!-- Flan Casero -->
                     <div class="snap-start shrink-0 w-64 md:w-72">
-                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                             <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1567602901355-1ffed202a25f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y3VzdGFyZCUyMHB1ZGRpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
-                            <div>
+                            <div class="card-content">
                                 <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Flan Casero</h3>
                                 <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Flan tradicional con caramelo casero</p>
                                 <p class="text-amber-600 font-bold text-lg">$7.99</p>
@@ -257,9 +289,9 @@
                 </div>
             </section>
 
-            <!-- Slider -->
+            <!-- Slider mejorado -->
             <div class="p-4 max-w-6xl mx-auto">
-                <div class="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden group animate-fade-in">
+                <div class="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden group animate-fade-in" id="slider-container">
                     <!-- Slider con transición automática -->
                     <div class="slide active bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1559620192-032c4bc4674e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fHN0cmF3YmVycnklMjBkZXNzZXJ0c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1200&q=60");'></div>
                     <div class="slide bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGdyYXBlJTIwZGVzc2VydHN8ZW58MHx8MHx8&auto=format&fit=crop&w=1200&q=60");'></div>
@@ -268,19 +300,19 @@
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                     
-                    <!-- Indicadores del slider -->
+                    <!-- Indicadores del slider mejorados -->
                     <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center gap-2">
-                        <div class="slide-indicator size-2 rounded-full bg-white cursor-pointer" data-index="0"></div>
-                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="1"></div>
-                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="2"></div>
-                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="3"></div>
+                        <div class="slide-indicator size-3 rounded-full bg-white cursor-pointer transition-all duration-300" data-index="0"></div>
+                        <div class="slide-indicator size-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300" data-index="1"></div>
+                        <div class="slide-indicator size-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300" data-index="2"></div>
+                        <div class="slide-indicator size-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300" data-index="3"></div>
                     </div>
                     
-                    <!-- Botones de navegación -->
-                    <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors duration-300 hidden md:flex items-center justify-center backdrop-blur-sm" id="prev-slide">
+                    <!-- Botones de navegación mejorados -->
+                    <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 transition-all duration-300 flex items-center justify-center backdrop-blur-sm shadow-lg transform hover:scale-110" id="prev-slide">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </button>
-                    <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors duration-300 hidden md:flex items-center justify-center backdrop-blur-sm" id="next-slide">
+                    <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 transition-all duration-300 flex items-center justify-center backdrop-blur-sm shadow-lg transform hover:scale-110" id="next-slide">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </button>
                 </div>
@@ -307,17 +339,17 @@
             <section id="fresas" class="py-6 md:py-8 max-w-6xl mx-auto animate-slide-in px-4">
                 <h2 class="text-2xl md:text-3xl font-bold pb-4 text-strawberry text-center">Delicias de Fresa</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1562440498-2a18aebf61e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fHN0cmF3YmVycnklMjBzaG9ydGNha2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Shortcake de Fresa</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Bizcocho esponjoso con fresas frescas y crema batida</p>
                             <p class="text-strawberry font-bold text-lg">$12.99</p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1621800043295-4a01d701c6bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fHN0cmF3YmVycnklY2MlQjMlQTdxdWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Mousse de Fresa</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Mousse suave y ligero con puré de fresa natural</p>
                             <p class="text-strawberry font-bold text-lg">$10.99</p>
@@ -330,17 +362,17 @@
             <section id="uvas" class="py-6 md:py-8 max-w-6xl mx-auto animate-slide-in px-4">
                 <h2 class="text-2xl md:text-3xl font-bold pb-4 text-grape text-center">Delicias de Uva</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Z3JhcGUlMjB0YXJ0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Tarta de Uvas</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Tarta dulce con uvas frescas y base de galleta</p>
                             <p class="text-grape font-bold text-lg">$13.99</p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
-                        <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1596363500725-29c2aed7c3cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Z3JhcGUlMjBqb2xseXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
+                        <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1596363500725-29c2aed7c3cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Z3RheXBlJTIwam9sbHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Gelatina de Uva</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Gelatina refrescante con sabor a uva natural</p>
                             <p class="text-grape font-bold text-lg">$6.99</p>
@@ -353,17 +385,17 @@
             <section id="gelatinas" class="py-6 md:py-8 max-w-6xl mx-auto animate-slide-in px-4">
                 <h2 class="text-2xl md:text-3xl font-bold pb-4 text-amber-500 text-center">Gelatinas Especiales</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1579503849555-2d4d5b1573f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Z2VsYXRpbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Gelatina de Mosaico</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Gelatina multicolor con trozos de fruta</p>
                             <p class="text-amber-600 font-bold text-lg">$8.99</p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1622480818326-b64b3b46bb4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGdlbGF0aW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Gelatina Nata</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Gelatina con capa de nata y frutos rojos</p>
                             <p class="text-amber-600 font-bold text-lg">$9.99</p>
@@ -376,17 +408,17 @@
             <section id="flan" class="py-6 md:py-8 max-w-6xl mx-auto animate-slide-in px-4">
                 <h2 class="text-2xl md:text-3xl font-bold pb-4 text-amber-500 text-center">Flan Casero</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1622480818326-b64b3b46bb4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGZsYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Flan de Vainilla</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Flan tradicional con vainilla natural y caramelo</p>
                             <p class="text-amber-600 font-bold text-lg">$7.99</p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark equal-height-card">
                         <div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1559620192-032c4bc4674e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fGNvY29udXQlMjBmbGFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
-                        <div>
+                        <div class="card-content">
                             <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Flan de Coco</h3>
                             <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Flan cremoso con sabor a coco y caramelo</p>
                             <p class="text-amber-600 font-bold text-lg">$8.99</p>
@@ -423,25 +455,55 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Configuración del slider
+            // Animación de escritura para las categorías
+            const categories = [
+                { id: 'fresas-text', text: 'Fresas', delay: 0 },
+                { id: 'uvas-text', text: 'Uvas', delay: 800 },
+                { id: 'gelatinas-text', text: 'Gelatinas', delay: 1600 },
+                { id: 'flan-text', text: 'Flan Casero', delay: 2400 }
+            ];
+            
+            categories.forEach(category => {
+                setTimeout(() => {
+                    const element = document.getElementById(category.id);
+                    element.textContent = category.text;
+                    element.style.animation = `typewriter 1s steps(${category.text.length + 1}) forwards, blink 1s steps(2) infinite ${category.text.length * 100 + 500}ms`;
+                }, category.delay);
+            });
+            
+            // Configuración del slider mejorado
             const slides = document.querySelectorAll('.slide');
             const indicators = document.querySelectorAll('.slide-indicator');
             const prevButton = document.getElementById('prev-slide');
             const nextButton = document.getElementById('next-slide');
+            const sliderContainer = document.getElementById('slider-container');
             let currentSlide = 0;
             let slideInterval;
+            let isSliding = false;
             
             // Función para mostrar una slide específica
             function showSlide(index) {
+                if (isSliding) return;
+                isSliding = true;
+                
                 // Ocultar todas las slides
                 slides.forEach(slide => slide.classList.remove('active'));
-                indicators.forEach(indicator => indicator.classList.replace('bg-white', 'bg-white/50'));
+                indicators.forEach(indicator => {
+                    indicator.classList.replace('bg-white', 'bg-white/50');
+                    indicator.classList.remove('scale-125');
+                });
                 
                 // Mostrar la slide actual
                 slides[index].classList.add('active');
                 indicators[index].classList.replace('bg-white/50', 'bg-white');
+                indicators[index].classList.add('scale-125');
                 
                 currentSlide = index;
+                
+                // Permitir siguiente transición después de un breve retraso
+                setTimeout(() => {
+                    isSliding = false;
+                }, 600);
             }
             
             // Función para avanzar a la siguiente slide
@@ -458,7 +520,7 @@
             
             // Iniciar el slider automático
             function startSlider() {
-                slideInterval = setInterval(nextSlide, 3000); // Cambia cada 3 segundos
+                slideInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
             }
             
             // Detener el slider automático
@@ -486,6 +548,7 @@
             // Event listeners para los indicadores
             indicators.forEach((indicator, index) => {
                 indicator.addEventListener('click', () => {
+                    if (currentSlide === index) return;
                     stopSlider();
                     showSlide(index);
                     startSlider();
@@ -493,15 +556,46 @@
             });
             
             // Pausar el slider cuando el ratón está sobre él
-            const sliderContainer = document.querySelector('.group');
             if (sliderContainer) {
                 sliderContainer.addEventListener('mouseenter', stopSlider);
                 sliderContainer.addEventListener('mouseleave', startSlider);
+                
+                // Soporte para dispositivos táctiles
+                sliderContainer.addEventListener('touchstart', stopSlider);
+                sliderContainer.addEventListener('touchend', startSlider);
             }
             
             // Inicializar el slider
             showSlide(0);
             startSlider();
+            
+            // Ajustar altura de todas las cards para que sean iguales
+            function adjustCardHeights() {
+                const cards = document.querySelectorAll('.equal-height-card');
+                let maxHeight = 0;
+                
+                // Reiniciar alturas para calcular correctamente
+                cards.forEach(card => {
+                    card.style.minHeight = 'auto';
+                });
+                
+                // Encontrar la altura máxima
+                cards.forEach(card => {
+                    const height = card.offsetHeight;
+                    if (height > maxHeight) {
+                        maxHeight = height;
+                    }
+                });
+                
+                // Aplicar la altura máxima a todas las cards
+                cards.forEach(card => {
+                    card.style.minHeight = `${maxHeight}px`;
+                });
+            }
+            
+            // Ajustar alturas al cargar y al redimensionar
+            window.addEventListener('load', adjustCardHeights);
+            window.addEventListener('resize', adjustCardHeights);
             
             // Animaciones para las cards al hacer hover
             const cards = document.querySelectorAll('.card-hover');
