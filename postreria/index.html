@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pastelería Dulce</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF9EC5", // Rosa pastel más vibrante
+                        "secondary": "#A6D0DD", // Azul pastel
+                        "accent": "#FFD3B6", // Naranja pastel
+                        "background-light": "#FFF9FB", // Fondo claro más suave
+                        "background-dark": "#2A1620", // Fondo oscuro más cálido
+                        "text-light": "#3A2430", // Texto más oscuro para mejor contraste
+                        "text-dark": "#F8F6F7",
+                        "text-subtle-light": "#7D6A75",
+                        "text-subtle-dark": "#C9B8C2",
+                        "border-light": "#F5E6EE",
+                        "border-dark": "#4A3340",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#35232D"
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem", // Bordes más redondeados
+                        "lg": "1.25rem",
+                        "xl": "1.75rem",
+                        "full": "9999px"
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'pulse-soft': 'pulseSoft 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceSubtle: {
+                            '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
+                            '40%': { transform: 'translateY(-5px)' },
+                            '60%': { transform: 'translateY(-3px)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Epilogue', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Animaciones personalizadas */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-hover:active {
+            transform: scale(0.95);
+        }
+        
+        /* Slider styles */
+        .slide {
+            opacity: 0;
+            transition: opacity 1s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        /* Mejoras de scroll para cards */
+        .scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: #FF9EC5 #F5E6EE;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-track {
+            background: #F5E6EE;
+            border-radius: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #FF9EC5;
+            border-radius: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #FF7BA9;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark">
+    <div class="relative flex h-auto min-h-screen w-full flex-col justify-between font-display text-text-light dark:text-text-dark">
+        <main class="flex-grow">
+            <header class="sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark shadow-sm">
+                <div class="flex items-center p-4 justify-between max-w-6xl mx-auto">
+                    <h1 class="text-2xl font-bold flex-1 text-center text-primary animate-fade-in">Pastelería Dulce</h1>
+                    <button class="flex items-center justify-center rounded-full h-12 w-12 bg-transparent text-text-light dark:text-text-dark hover:bg-primary/20 transition-colors duration-300 relative group animate-fade-in">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span class="absolute -top-1 -right-1 bg-secondary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse-soft">3</span>
+                        <span class="absolute opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-xs rounded py-1 px-2 bottom-full mb-2 left-1/2 transform -translate-x-1/2 transition-opacity duration-300">Carrito</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="p-4 max-w-6xl mx-auto">
+                <div class="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden group animate-fade-in">
+                    <!-- Slider con transición automática -->
+                    <div class="slide active bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFwk6EfYrHqCv4P2NHzxPJMKLHtyLZ7jvZkgDl-gXoQhfGzv1RnUJyQ0K9AW5XDrQid4ELPe7Op3orpMxnGnG7Q-zTza_6_YIMXi01gvZMzU1fxNOF8WP4ETwScrOWAoiKVvTdu1YepyRpYxVUA_XuozCh_vJnhDHYza4ui0bAVsM3nJ23toor0wwsYnb82Dq5Na52352vPTZWyHOaEe2ldmUjH9Qls4cR211horyncSrQtwqLXxBqfsfXTetrJBb9KeEhH7Xe5Gg");'></div>
+                    <div class="slide bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_Gh9wWrLpa7CuMoI5K2FP5MeafN1aSexTOsgrngk_kESColeiG9zPsWaXQroWo3ANQxhgbi4V7AczRO6wrRBCMlnLigZW7X3HUm418JjMlZF8Z_OhKlvQ9s11eMo3MyRsxsad74su2QonEsZsOOZVhfCgo1UsPiu_oCFwAj-Qy8-fMLsu-xTGS4P2m77rE2nX9YTW1Co08uve01WGNmSXtP1CTp7jiUeyKIFYrKO8_wGj7mPwd4W9uqf941qk0VNt6CBaONHInYE");'></div>
+                    <div class="slide bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwCuVC12gN9dDGdtsGyu7QTD5Og5r3c68l46p-c5XzDNiXwt62ryx2cDtnJV4TZwQNNZ5u5pwCB2-cQf2qGUwid-7UZxO7tOLEJq9aJrpeiiosrCXUcUcF9_HhrixxxOvQUzX-YTt1EMldz__ABZuiZYc0t36yOOn7GPUlN1fvu88dcuK_PbqYEmE18KEV80bQPCm8C-mZ3w7joEN8aOpoMyoBtTVIqVByOmY_c7efRAZmXUPux-tK7aAxwRfNufhiesWjKbLUX-g");'></div>
+                    <div class="slide bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOD99o7GLtkzt9M0bxb1wwu0wHR1NiLWbmMfghYiAIEPfxAYNIdfLnTFSI3I5tnm6rudJ_CXf_EXV3nLP29f5OwJ5pgQ5v9KCfAlUZ1WYTTRFG_oyRGmgBE0o7FaMaPYTofsiVUjQOOripbyaEe4EYvqsvjfzOVXvUniO-sPGmu2QTHc9XIGa_J75s4h6KWOKliW1iUQfHU_xqnMUo8IEjvAc_D5zZz4mDRqiIshtisZWEv0QNrglPkpnf3aHe0mH13OlOimkK7BM");'></div>
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    
+                    <!-- Indicadores del slider -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center gap-2">
+                        <div class="slide-indicator size-2 rounded-full bg-white cursor-pointer" data-index="0"></div>
+                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="1"></div>
+                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="2"></div>
+                        <div class="slide-indicator size-2 rounded-full bg-white/50 cursor-pointer" data-index="3"></div>
+                    </div>
+                    
+                    <!-- Botones de navegación -->
+                    <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors duration-300 hidden md:flex items-center justify-center backdrop-blur-sm" id="prev-slide">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors duration-300 hidden md:flex items-center justify-center backdrop-blur-sm" id="next-slide">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+
+            <section class="py-6 md:py-8 max-w-6xl mx-auto animate-slide-in">
+                <h2 class="text-2xl md:text-3xl font-bold px-4 pb-4 text-primary">Nuestros Favoritos</h2>
+                <div class="flex overflow-x-auto scroll-container snap-x snap-mandatory px-4 gap-4 pb-4">
+                    <!-- Card 1 -->
+                    <div class="snap-start shrink-0 w-64 md:w-72">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                            <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_Gh9wWrLpa7CuMoI5K2FP5MeafN1aSexTOsgrngk_kESColeiG9zPsWaXQroWo3ANQxhgbi4V7AczRO6wrRBCMlnLigZW7X3HUm418JjMlZF8Z_OhKlvQ9s11eMo3MyRsxsad74su2QonEsZsOOZVhfCgo1UsPiu_oCFwAj-Qy8-fMLsu-xTGS4P2m77rE2nX9YTW1Co08uve01WGNmSXtP1CTp7jiUeyKIFYrKO8_wGj7mPwd4W9uqf941qk0VNt6CBaONHInYE");'></div>
+                            <div>
+                                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Tarta de Chocolate</h3>
+                                <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Rico pastel de chocolate con glaseado</p>
+                                <p class="text-primary font-bold text-lg">$12.99</p>
+                            </div>
+                            <button class="flex items-center justify-center rounded-full h-10 px-4 mt-2 bg-primary text-white text-sm font-bold w-full btn-hover">
+                                <span class="mr-2">Añadir al carrito</span>
+                                <span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="snap-start shrink-0 w-64 md:w-72">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                            <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwCuVC12gN9dDGdtsGyu7QTD5Og5r3c68l46p-c5XzDNiXwt62ryx2cDtnJV4TZwQNNZ5u5pwCB2-cQf2qGUwid-7UZxO7tOLEJq9aJrpeiiosrCXUcUcF9_HhrixxxOvQUzX-YTt1EMldz__ABZuiZYc0t36yOOn7GPUlN1fvu88dcuK_PbqYEmE18KEV80bQPCm8C-mZ3w7joEN8aOpoMyoBtTVIqVByOmY_c7efRAZmXUPux-tK7aAxwRfNufhiesWjKbLUX-g");'></div>
+                            <div>
+                                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Tarta de Frutas</h3>
+                                <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Tarta fresca con frutas de temporada</p>
+                                <p class="text-primary font-bold text-lg">$14.99</p>
+                            </div>
+                            <button class="flex items-center justify-center rounded-full h-10 px-4 mt-2 bg-primary text-white text-sm font-bold w-full btn-hover">
+                                <span class="mr-2">Añadir al carrito</span>
+                                <span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="snap-start shrink-0 w-64 md:w-72">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                            <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOD99o7GLtkzt9M0bxb1wwu0wHR1NiLWbmMfghYiAIEPfxAYNIdfLnTFSI3I5tnm6rudJ_CXf_EXV3nLP29f5OwJ5pgQ5v9KCfAlUZ1WYTTRFG_oyRGmgBE0o7FaMaPYTofsiVUjQOOripbyaEe4EYvqsvjfzOVXvUniO-sPGmu2QTHc9XIGa_J75s4h6KWOKliW1iUQfHU_xqnMUo8IEjvAc_D5zZz4mDRqiIshtisZWEv0QNrglPkpnf3aHe0mH13OlOimkK7BM");'></div>
+                            <div>
+                                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Macarons</h3>
+                                <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Macarons coloridos con relleno cremoso</p>
+                                <p class="text-primary font-bold text-lg">$9.99</p>
+                            </div>
+                            <button class="flex items-center justify-center rounded-full h-10 px-4 mt-2 bg-primary text-white text-sm font-bold w-full btn-hover">
+                                <span class="mr-2">Añadir al carrito</span>
+                                <span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 adicional para mostrar más productos -->
+                    <div class="snap-start shrink-0 w-64 md:w-72">
+                        <div class="flex flex-col gap-3 group card-hover bg-card-light dark:bg-card-dark p-4 rounded-xl shadow-md border border-border-light dark:border-border-dark">
+                            <div class="w-full aspect-square bg-cover bg-center rounded-xl overflow-hidden transform transition-transform duration-300 group-hover:scale-105 shadow-inner" style='background-image: url("https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGFzdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");'></div>
+                            <div>
+                                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Cupcakes Decorados</h3>
+                                <p class="text-sm text-text-subtle-light dark:text-text-subtle-dark mb-2">Deliciosos cupcakes con frosting colorido</p>
+                                <p class="text-primary font-bold text-lg">$8.99</p>
+                            </div>
+                            <button class="flex items-center justify-center rounded-full h-10 px-4 mt-2 bg-primary text-white text-sm font-bold w-full btn-hover">
+                                <span class="mr-2">Añadir al carrito</span>
+                                <span class="material-symbols-outlined text-lg">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="px-4 py-8 max-w-6xl mx-auto animate-slide-in">
+                <h2 class="text-2xl md:text-3xl font-bold pb-4 text-primary">Ofertas Especiales</h2>
+                <div class="flex items-center justify-between gap-4 rounded-xl p-6 bg-gradient-to-r from-primary/20 to-accent/20 dark:from-primary/30 dark:to-accent/30 border border-border-light dark:border-border-dark shadow-md card-hover">
+                    <div class="flex flex-col gap-2 flex-1">
+                        <h3 class="text-lg md:text-xl font-bold text-text-light dark:text-text-dark">Descuento de Verano</h3>
+                        <p class="text-sm md:text-base text-text-subtle-light dark:text-text-subtle-dark">20% de descuento en todos los pasteles</p>
+                        <p class="text-xs text-text-subtle-light dark:text-text-subtle-dark mt-2">Válido hasta el 31 de Agosto</p>
+                        <button class="flex items-center justify-center rounded-full h-12 px-6 mt-3 bg-primary text-white text-sm font-bold w-fit btn-hover">
+                            <span>Ver más ofertas</span>
+                            <span class="material-symbols-outlined ml-2 animate-bounce-subtle">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-center bg-cover rounded-lg flex-shrink-0 shadow-inner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCWKRSXrpbl11bJZwRp4JMRzJeEI8ljiJ0KRB9TPuFWBZ5Qq6mHLCB39p-WnPu0nJ0ww1igoUM8jGgriYuBkzmA85jX8m6mKlH5_GmMTUzK7Kn4m1RG56dF-FhGfWS9x7uhn06HEPqj2i_Qu3HO3-rjnf3LdCf6YaE9ikgJGEFf-QEMqh0Qk1ONT9Hncp3kEKr2qbas36nZQpDK8Yj2TH9VDMSmIcL20LDbAyjEpbDqul5C7Dc7cZeeicvx9sen8MeqPveGL4VJL7E");'></div>
+                </div>
+            </section>
+
+            <!-- Nueva sección: Categorías -->
+            <section class="px-4 py-8 max-w-6xl mx-auto animate-slide-in">
+                <h2 class="text-2xl md:text-3xl font-bold pb-4 text-primary">Nuestras Categorías</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-secondary/20 dark:bg-secondary/30 rounded-xl p-4 text-center card-hover cursor-pointer">
+                        <span class="material-symbols-outlined text-4xl text-secondary dark:text-secondary/90 mb-2">cake</span>
+                        <p class="font-medium text-text-light dark:text-text-dark">Pasteles</p>
+                    </div>
+                    <div class="bg-accent/20 dark:bg-accent/30 rounded-xl p-4 text-center card-hover cursor-pointer">
+                        <span class="material-symbols-outlined text-4xl text-accent dark:text-accent/90 mb-2">cookie</span>
+                        <p class="font-medium text-text-light dark:text-text-dark">Galletas</p>
+                    </div>
+                    <div class="bg-primary/20 dark:bg-primary/30 rounded-xl p-4 text-center card-hover cursor-pointer">
+                        <span class="material-symbols-outlined text-4xl text-primary dark:text-primary/90 mb-2">local_cafe</span>
+                        <p class="font-medium text-text-light dark:text-text-dark">Postres</p>
+                    </div>
+                    <div class="bg-purple-300/20 dark:bg-purple-400/30 rounded-xl p-4 text-center card-hover cursor-pointer">
+                        <span class="material-symbols-outlined text-4xl text-purple-400 dark:text-purple-400/90 mb-2">celebration</span>
+                        <p class="font-medium text-text-light dark:text-text-dark">Fiestas</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="sticky bottom-0 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark pb-safe z-10 shadow-lg">
+            <nav class="flex justify-around items-start pt-2 pb-2 max-w-6xl mx-auto">
+                <a class="flex flex-col items-center justify-center gap-1 text-primary w-1/4 group" href="#">
+                    <div class="relative flex h-8 w-16 items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl group-hover:animate-bounce-subtle">home</span>
+                        <div class="absolute -bottom-1 h-1 w-8 rounded-full bg-primary"></div>
+                    </div>
+                    <p class="text-xs font-bold">Inicio</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-text-subtle-light dark:text-text-subtle-dark w-1/4 hover:text-primary transition-colors group" href="#">
+                    <span class="material-symbols-outlined text-3xl group-hover:animate-bounce-subtle">menu_book</span>
+                    <p class="text-xs font-medium">Menú</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-text-subtle-light dark:text-text-subtle-dark w-1/4 hover:text-primary transition-colors group" href="#">
+                    <span class="material-symbols-outlined text-3xl group-hover:animate-bounce-subtle">receipt_long</span>
+                    <p class="text-xs font-medium">Pedidos</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-text-subtle-light dark:text-text-subtle-dark w-1/4 hover:text-primary transition-colors group" href="#">
+                    <span class="material-symbols-outlined text-3xl group-hover:animate-bounce-subtle">person</span>
+                    <p class="text-xs font-medium">Perfil</p>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuración del slider
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.slide-indicator');
+            const prevButton = document.getElementById('prev-slide');
+            const nextButton = document.getElementById('next-slide');
+            let currentSlide = 0;
+            let slideInterval;
+            
+            // Función para mostrar una slide específica
+            function showSlide(index) {
+                // Ocultar todas las slides
+                slides.forEach(slide => slide.classList.remove('active'));
+                indicators.forEach(indicator => indicator.classList.replace('bg-white', 'bg-white/50'));
+                
+                // Mostrar la slide actual
+                slides[index].classList.add('active');
+                indicators[index].classList.replace('bg-white/50', 'bg-white');
+                
+                currentSlide = index;
+            }
+            
+            // Función para avanzar a la siguiente slide
+            function nextSlide() {
+                let nextIndex = (currentSlide + 1) % slides.length;
+                showSlide(nextIndex);
+            }
+            
+            // Función para retroceder a la slide anterior
+            function prevSlide() {
+                let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(prevIndex);
+            }
+            
+            // Iniciar el slider automático
+            function startSlider() {
+                slideInterval = setInterval(nextSlide, 3000); // Cambia cada 3 segundos
+            }
+            
+            // Detener el slider automático
+            function stopSlider() {
+                clearInterval(slideInterval);
+            }
+            
+            // Event listeners para los botones de navegación
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    stopSlider();
+                    nextSlide();
+                    startSlider();
+                });
+            }
+            
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    stopSlider();
+                    prevSlide();
+                    startSlider();
+                });
+            }
+            
+            // Event listeners para los indicadores
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    stopSlider();
+                    showSlide(index);
+                    startSlider();
+                });
+            });
+            
+            // Pausar el slider cuando el ratón está sobre él
+            const sliderContainer = document.querySelector('.group');
+            if (sliderContainer) {
+                sliderContainer.addEventListener('mouseenter', stopSlider);
+                sliderContainer.addEventListener('mouseleave', startSlider);
+            }
+            
+            // Inicializar el slider
+            showSlide(0);
+            startSlider();
+            
+            // Animaciones para las cards al hacer hover
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('shadow-lg');
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('shadow-lg');
+                });
+            });
+            
+            // Efectos para los botones
+            const buttons = document.querySelectorAll('.btn-hover');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.classList.add('shadow-md');
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.classList.remove('shadow-md');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
